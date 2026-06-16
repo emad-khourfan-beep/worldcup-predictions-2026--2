@@ -419,7 +419,7 @@ function showToast(message){
 }
 
 function toDate(match){
-  return new Date(match.date + "T" + match.time + ":00+04:00");
+  return new Date(match.date + "T" + match.time + ":00Z");
 }
 
 function isClosed(match){
@@ -492,7 +492,7 @@ function renderMatches(){
           </div>
         </div>
 
-        <div class="time">⏰ ${match.date} — ${match.time} بتوقيت الإمارات</div>
+        <div class="time">⏰ ${match.date} — ${match.time} بتوقيت غرينتش GMT</div>
 
         <div id="status_${index}" class="${closed ? "status-closed" : "status-open"}">
           ${countdownText(match)}
