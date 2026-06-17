@@ -1,36 +1,179 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>توقعات كأس العالم</title>
+<meta charset="UTF-8">
+<title>مسابقة توقعات كأس العالم</title>
 <style>
-*{box-sizing:border-box}body{margin:0;font-family:Arial,Tahoma,sans-serif;background:linear-gradient(135deg,#06142e,#0b2d5f,#06142e);color:#fff;min-height:100vh}.container{max-width:1150px;margin:auto;padding:18px}.hero,.card{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.18);border-radius:28px;padding:22px;margin-bottom:18px;box-shadow:0 20px 55px rgba(0,0,0,.3)}.hero{text-align:center;padding:35px 15px}.hero h1{margin:0;color:#ffd54a;font-size:36px}.hero p{color:#dbe8ff}.grid{display:grid;grid-template-columns:1.3fr .7fr;gap:18px}input{width:100%;padding:13px;border:0;border-radius:12px;font-size:16px;margin:6px 0}.row{display:grid;grid-template-columns:1fr 1fr;gap:10px}.match-row{display:grid;grid-template-columns:130px 1fr 58px 1fr 105px;align-items:center;gap:8px;background:linear-gradient(90deg,#1a1056,#0a315f);border:1px solid rgba(255,213,74,.45);border-radius:18px;padding:9px;margin:10px 0}.date-pill,.time-pill{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);border-radius:15px;padding:10px;text-align:center;font-weight:bold}.time-pill{color:#ffd54a}.team{display:flex;align-items:center;justify-content:center;gap:10px;font-weight:bold;font-size:18px;text-align:center}.flag-img{width:44px;height:30px;object-fit:cover;border-radius:5px;border:1px solid rgba(255,255,255,.5);background:#fff}.vs{background:linear-gradient(135deg,#ffd54a,#c8951e);color:#06142e;border-radius:18px;padding:10px;text-align:center;font-weight:bold}.prediction-box{grid-column:1/-1;background:rgba(255,255,255,.07);border-radius:15px;padding:10px;margin-top:8px}.score-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}.status{font-size:13px;color:#b7c8ec;text-align:center;margin-top:6px}.closed{color:#ff8c8c}button{width:100%;border:0;padding:15px;border-radius:16px;background:linear-gradient(135deg,#ffd54a,#c8951e);color:#06142e;font-size:18px;font-weight:bold;cursor:pointer;margin-top:10px}button:disabled{opacity:.6}table{width:100%;border-collapse:collapse}th,td{padding:10px;border-bottom:1px solid rgba(255,255,255,.15);text-align:center;font-size:14px}th{background:#ffd54a;color:#06142e}.kpis{display:grid;grid-template-columns:1fr 1fr;gap:10px}.kpi{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.14);border-radius:18px;padding:15px;text-align:center}.kpi b{display:block;color:#ffd54a;font-size:28px}small{color:#dbe8ff}.toast{position:fixed;left:18px;bottom:18px;background:#0b2d5f;border:1px solid rgba(255,213,74,.35);padding:14px;border-radius:16px;display:none;max-width:340px}@media(max-width:900px){.grid{grid-template-columns:1fr}.match-row{grid-template-columns:1fr}}
-</style></head><body><div class="container">
-<div class="hero"><h1>🏆 توقعات كأس العالم</h1><p>توقع النتيجة، اجمع النقاط، ونافس أصدقاءك</p></div>
-<div class="grid"><main><div class="card"><h2>⚽ مباريات اليوم</h2><form id="predictionForm"><div class="row"><input id="playerName" placeholder="👤 اكتب اسمك" required><input id="whatsapp" placeholder="📱 رقم الواتساب اختياري"></div><div id="matches">جاري تحميل المباريات...</div><button id="submitBtn" type="submit">إرسال التوقع</button></form></div>
-<div class="card"><h2>📋 Participants Predictions & Points Breakdown</h2><table><thead><tr><th>الاسم</th><th>المباراة</th><th>التوقع</th><th>النتيجة</th><th>النقاط</th></tr></thead><tbody id="predictionsBody"><tr><td colspan="5">لا توجد توقعات بعد</td></tr></tbody></table></div>
-<div class="card"><h2>📌 نتائج الأيام السابقة</h2><table><thead><tr><th>المباراة</th><th>النتيجة</th><th>الحالة</th></tr></thead><tbody id="resultsBody"><tr><td colspan="3">لا توجد نتائج بعد</td></tr></tbody></table></div></main>
-<aside><div class="card"><h2>📊 الإحصائيات</h2><div class="kpis"><div class="kpi"><b id="playersCount">0</b>المتوقّعون</div><div class="kpi"><b id="predictionsCount">0</b>التوقعات</div></div></div>
-<div class="card"><h2>📊 نظام النقاط</h2>🎯 10 نقاط = النتيجة الصحيحة بالكامل<br>✅ 5 نقاط = توقع الفائز أو التعادل<br>⚽ 2 نقطة = أهداف فريق واحد صحيحة<br>🔒 يغلق التوقع قبل المباراة بساعة</div>
-<div class="card"><h2>🏅 ترتيب الفائزين</h2><table><thead><tr><th>#</th><th>الاسم</th><th>النقاط</th></tr></thead><tbody id="leaderboardBody"><tr><td colspan="3">سيظهر الترتيب بعد احتساب النتائج</td></tr></tbody></table></div></aside></div></div><div id="toast" class="toast"></div>
+body{font-family:Arial;background:#f4f6f8;padding:20px}
+.container{max-width:900px;margin:auto;background:white;padding:20px;border-radius:16px}
+h1{text-align:center;color:#0b3d91}
+input{padding:8px;margin:4px;width:90px}
+button{padding:10px 18px;background:#0b3d91;color:white;border:0;border-radius:8px;cursor:pointer}
+.match{background:#eef3ff;padding:12px;margin:10px 0;border-radius:10px}
+table{width:100%;border-collapse:collapse;margin-top:20px}
+th,td{border:1px solid #ddd;padding:10px;text-align:center}
+th{background:#0b3d91;color:white}
+</style>
+</head>
+
+<body>
+<div class="container">
+<h1>🏆 مسابقة توقعات كأس العالم 2026</h1>
+
+<label>اسم المشارك:</label>
+<input id="playerName" placeholder="الاسم" style="width:180px">
+
+<div id="matches"></div>
+
+<button onclick="addPrediction()">إضافة التوقع</button>
+<button onclick="calculateRanking()">حساب الترتيب</button>
+
+<h2>📊 الترتيب</h2>
+<table>
+<thead>
+<tr>
+<th>المركز</th>
+<th>الاسم</th>
+<th>النقاط</th>
+</tr>
+</thead>
+<tbody id="ranking"></tbody>
+</table>
+</div>
+
 <script>
-const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbymFV1IOihICbNAu5STmuZg9FsDO5UkZ805ndgLO3-4EgdbDoBb0aTNykr6R2r_ClWEzg/exec";
-let matches=[], submitting=false;
-const teamAssets={"البرتغال":{code:"pt"},"الكونغو الديمقراطية":{code:"cd"},"إنجلترا":{code:"gb-eng"},"كرواتيا":{code:"hr"},"غانا":{code:"gh"},"بنما":{code:"pa"},"أوزبكستان":{code:"uz"},"كولومبيا":{code:"co"},"التشيك":{code:"cz"},"جنوب أفريقيا":{code:"za"},"سويسرا":{code:"ch"},"البوسنة والهرسك":{code:"ba"},"فرنسا":{code:"fr"},"السنغال":{code:"sn"},"العراق":{code:"iq"},"النرويج":{code:"no"},"الأرجنتين":{code:"ar"},"الجزائر":{code:"dz"},"النمسا":{code:"at"},"الأردن":{code:"jo"}};
-function flagImg(team){const a=teamAssets[String(team||"").trim()];return a?`<img class="flag-img" src="https://flagcdn.com/w160/${a.code}.png" alt="${team}">`:"🏳️";}
-function showToast(msg){const t=document.getElementById("toast");t.textContent=msg;t.style.display="block";setTimeout(()=>t.style.display="none",3500);}
-function toDate(match){return new Date(match.date+"T"+match.time+":00Z");}
-function isClosed(match){if(match.closed===true)return true;return new Date()>=new Date(toDate(match).getTime()-60*60*1000);}
-function dateDisplay(d){const p=String(d||"").split("-");return p.length===3?`${p[2]}/${p[1]}/${p[0]}`:d;}
-function timeDisplay(t){const parts=String(t||"00:00").split(":").map(Number), h=parts[0], m=parts[1];const s=h>=12?"م":"ص";let hh=h%12;if(hh===0)hh=12;return `${hh}:${String(m).padStart(2,"0")} ${s}`;}
-function countdownText(match){const now=new Date(),start=toDate(match),close=new Date(start.getTime()-60*60*1000);if(now>=start)return"🔴 بدأت المباراة";if(now>=close)return"🔒 التوقع مغلق";const diff=close-now,h=Math.floor(diff/(1000*60*60)),m=Math.floor((diff%(1000*60*60))/(1000*60));return`⏳ يغلق بعد ${h} ساعة و ${m} دقيقة`;}
-async function loadMatches(){const box=document.getElementById("matches");box.innerHTML="جاري تحميل المباريات...";try{const r=await fetch(GOOGLE_SCRIPT_URL+"?v="+Date.now());matches=await r.json();renderMatches();}catch(e){box.innerHTML="❌ فشل تحميل المباريات.";}}
-function renderMatches(){const box=document.getElementById("matches");box.innerHTML="";if(!matches||!matches.length){box.innerHTML="لا توجد مباريات اليوم.";return;}matches.forEach((match,i)=>{const closed=isClosed(match);box.innerHTML+=`<div class="match-row"><div class="date-pill">${dateDisplay(match.date)}</div><div class="team">${flagImg(match.away)} <span>${match.away}</span></div><div class="vs">VS</div><div class="team"><span>${match.home}</span> ${flagImg(match.home)}</div><div class="time-pill">${timeDisplay(match.time)}</div><div class="prediction-box"><div class="score-grid"><input type="number" min="0" max="30" id="home_${i}" placeholder="أهداف ${match.home}" ${closed?"disabled":"required"}><input type="number" min="0" max="30" id="away_${i}" placeholder="أهداف ${match.away}" ${closed?"disabled":"required"}></div><div id="status_${i}" class="status ${closed?"closed":""}">${countdownText(match)}</div></div></div>`;});}
-function updateCountdowns(){matches.forEach((match,i)=>{const st=document.getElementById("status_"+i),h=document.getElementById("home_"+i),a=document.getElementById("away_"+i);if(!st||!h||!a)return;const closed=isClosed(match);st.textContent=countdownText(match);st.className="status "+(closed?"closed":"");h.disabled=closed;a.disabled=closed;});}
-document.getElementById("predictionForm").addEventListener("submit",async function(e){e.preventDefault();if(submitting)return;const playerName=document.getElementById("playerName").value.trim(),whatsapp=document.getElementById("whatsapp").value.trim(),btn=document.getElementById("submitBtn");if(!playerName){showToast("اكتب اسمك أولاً");return;}const predictions=[];for(let i=0;i<matches.length;i++){const match=matches[i];if(isClosed(match))continue;const homeGoals=document.getElementById("home_"+i).value,awayGoals=document.getElementById("away_"+i).value;if(homeGoals===""||awayGoals===""){showToast("يرجى تعبئة جميع المباريات المفتوحة");return;}predictions.push({id:match.id,homeTeam:match.home,awayTeam:match.away,homeGoals,awayGoals});}if(!predictions.length){showToast("🔒 لا توجد مباريات مفتوحة");return;}submitting=true;btn.disabled=true;btn.textContent="جاري الإرسال...";try{await fetch(GOOGLE_SCRIPT_URL,{method:"POST",mode:"no-cors",body:JSON.stringify({playerName,whatsapp,predictions})});showToast("✅ تم إرسال التوقع بنجاح");this.reset();setTimeout(()=>{loadStats();loadLeaderboard();loadPredictions();},1500);}catch(e){showToast("❌ تعذر إرسال التوقع");}finally{submitting=false;btn.disabled=false;btn.textContent="إرسال التوقع";}});
-async function loadStats(){try{const r=await fetch(GOOGLE_SCRIPT_URL+"?action=stats&v="+Date.now()),d=await r.json();document.getElementById("playersCount").textContent=d.playersCount||0;document.getElementById("predictionsCount").textContent=d.predictionsCount||0;}catch(e){console.log(e);}}
-async function loadLeaderboard(){try{const r=await fetch(GOOGLE_SCRIPT_URL+"?action=leaderboard&v="+Date.now()),data=await r.json(),body=document.getElementById("leaderboardBody");body.innerHTML="";if(!data||!data.length){body.innerHTML='<tr><td colspan="3">سيظهر الترتيب بعد احتساب النتائج</td></tr>';return;}data.slice(0,20).forEach((p,i)=>{const medal=i===0?"🥇":i===1?"🥈":i===2?"🥉":p.rank;body.innerHTML+=`<tr><td>${medal}</td><td>${p.name||"-"}</td><td>${p.points||0}</td></tr>`;});}catch(e){console.log(e);}}
-async function loadResults(){try{const r=await fetch(GOOGLE_SCRIPT_URL+"?action=results&v="+Date.now()),data=await r.json(),body=document.getElementById("resultsBody");body.innerHTML="";if(!data||!data.length){body.innerHTML='<tr><td colspan="3">لا توجد نتائج بعد</td></tr>';return;}data.slice(0,30).forEach(item=>{body.innerHTML+=`<tr><td>${item.match||"-"}</td><td>${item.result||"-"}</td><td>${item.status||"-"}</td></tr>`;});}catch(e){console.log(e);}}
-async function loadPredictions(){try{const r=await fetch(GOOGLE_SCRIPT_URL+"?action=predictions&v="+Date.now()),data=await r.json(),body=document.getElementById("predictionsBody");body.innerHTML="";if(!data||!data.length){body.innerHTML='<tr><td colspan="5">لا توجد توقعات بعد</td></tr>';return;}data.forEach(item=>{body.innerHTML+=`<tr><td>${item.name||"-"}</td><td>${item.match||"-"}</td><td>${item.prediction||"-"}</td><td>${item.actual||"-"}</td><td><b>${item.points||0}</b><br><small>${item.reason||""}</small></td></tr>`;});}catch(e){console.log(e);}}
-loadMatches();loadStats();loadLeaderboard();loadResults();loadPredictions();setInterval(updateCountdowns,60000);setInterval(loadStats,60000);setInterval(loadLeaderboard,60000);setInterval(loadResults,60000);setInterval(loadPredictions,60000);
-</script></body></html>
+const matches = [
+  { id: 1, home: "ألمانيا", away: "كوراساو", actualHome: null, actualAway: null },
+  { id: 2, home: "هولندا", away: "اليابان", actualHome: null, actualAway: null },
+  { id: 3, home: "ساحل العاج", away: "الإكوادور", actualHome: null, actualAway: null },
+  { id: 4, home: "السويد", away: "تونس", actualHome: null, actualAway: null }
+];
+
+let players = [];
+
+function renderMatches() {
+  const container = document.getElementById("matches");
+  container.innerHTML = "";
+
+  matches.forEach(match => {
+    container.innerHTML += `
+      <div class="match">
+        <strong>${match.home} × ${match.away}</strong><br>
+        توقع ${match.home}: 
+        <input type="number" min="0" id="p_home_${match.id}">
+        توقع ${match.away}: 
+        <input type="number" min="0" id="p_away_${match.id}">
+        <br>
+        النتيجة الفعلية ${match.home}: 
+        <input type="number" min="0" id="a_home_${match.id}">
+        النتيجة الفعلية ${match.away}: 
+        <input type="number" min="0" id="a_away_${match.id}">
+      </div>
+    `;
+  });
+}
+
+function calculatePoints(predictedHome, predictedAway, actualHome, actualAway) {
+  let points = 0;
+
+  if (predictedHome === actualHome && predictedAway === actualAway) {
+    return 10;
+  }
+
+  const predictedResult =
+    predictedHome > predictedAway ? "HOME" :
+    predictedHome < predictedAway ? "AWAY" : "DRAW";
+
+  const actualResult =
+    actualHome > actualAway ? "HOME" :
+    actualHome < actualAway ? "AWAY" : "DRAW";
+
+  if (predictedResult === actualResult) {
+    points += 5;
+  }
+
+  if (predictedHome === actualHome) points += 2;
+  if (predictedAway === actualAway) points += 2;
+
+  return points;
+}
+
+function addPrediction() {
+  const name = document.getElementById("playerName").value.trim();
+
+  if (!name) {
+    alert("اكتب اسم المشارك");
+    return;
+  }
+
+  const predictions = [];
+
+  for (const match of matches) {
+    const predictedHome = Number(document.getElementById(`p_home_${match.id}`).value);
+    const predictedAway = Number(document.getElementById(`p_away_${match.id}`).value);
+
+    predictions.push({
+      matchId: match.id,
+      predictedHome,
+      predictedAway
+    });
+  }
+
+  players.push({ name, predictions, totalPoints: 0 });
+
+  alert("تمت إضافة التوقع بنجاح");
+  document.getElementById("playerName").value = "";
+}
+
+function updateActualResults() {
+  matches.forEach(match => {
+    const homeValue = document.getElementById(`a_home_${match.id}`).value;
+    const awayValue = document.getElementById(`a_away_${match.id}`).value;
+
+    match.actualHome = homeValue === "" ? null : Number(homeValue);
+    match.actualAway = awayValue === "" ? null : Number(awayValue);
+  });
+}
+
+function calculateRanking() {
+  updateActualResults();
+
+  players.forEach(player => {
+    let total = 0;
+
+    player.predictions.forEach(prediction => {
+      const match = matches.find(m => m.id === prediction.matchId);
+
+      if (match.actualHome !== null && match.actualAway !== null) {
+        total += calculatePoints(
+          prediction.predictedHome,
+          prediction.predictedAway,
+          match.actualHome,
+          match.actualAway
+        );
+      }
+    });
+
+    player.totalPoints = total;
+  });
+
+  players.sort((a, b) => b.totalPoints - a.totalPoints);
+
+  const ranking = document.getElementById("ranking");
+  ranking.innerHTML = "";
+
+  players.forEach((player, index) => {
+    ranking.innerHTML += `
+      <tr>
+        <td>${index + 1}</td>
+        <td>${player.name}</td>
+        <td>${player.totalPoints}</td>
+      </tr>
+    `;
+  });
+}
+
+renderMatches();
+</script>
+</body>
+</html>
